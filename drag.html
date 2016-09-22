@@ -26,50 +26,71 @@
 		height: 100%;
 		margin: 0;
 	}
-  .move{
-    width:100px;
-    height:100px;
-    background:#60f;
-    z-index: 2;
-    cursor: move;
+  .ydnd-container{
+    padding: 15px;
+    overflow: auto;
+    /* visibility: hidden; */
   }
-  .move1{
-    width:50px;
-    height:50px;
-
-    background:#f60;
-  }
-  .drop-area,.drop-area1,.drop-area2{
-		width: 200px;
-		height: 200px;
-		background-color: #eee;
+  .ydnd{
+		position: relative;
+		cursor: move;
+		width: 100%;
+		height:100%;
+		background-color: #aaa;
 		/* border: 2px dashed #aaa; */
   }
-  .drop-area{
-  	background-color: #f60;
-		/* position:absolute;
-		left: 400px;
-		top: 200px; */
-		/* transform:translate(-50%,-50%); */
+  .col-3{
+  	display: inline-block;
+  	float: left;
+		width: 33.333%;
+		background-color: #aaa;
+		padding: 20px;
   }
-  .dragtest{
-		background:#f8f8f8;
-		border: 2px dashed #eee;
+  .d1{
+    width:100%;
+    /* background:#f60; */
+  }
+  .d2{
+    width:200px;
+    height:200px;
+    background:#ff0033;
+  }
+  .d3{
+    width:300px;
+    height:300px;
+    background:#ff88cc;
+  }
+  .test1{
+  	background-color: #eee;
+  	height: 200px;
+  	margin: 10px;
   }
 </style>
 </head>
 <body>
 
-<!-- <div class="move"></div> -->
+<div class="d1">
+	<div class="col-3">
+		<div class="test1 ydnd">a1</div>
+		<div class="test1 ydnd">a2</div>
+		<div class="test1 ydnd">a3</div>
+	</div>
 
-<div id="move" class="move">11</div>
-<!-- <div id="move2" class="move1" draggable="true">22</div> -->
+  <div class="col-3">
+    <div class="test1 ydnd">b1</div>
+    <div class="test1 ydnd">b2</div>
+    <div class="test1 ydnd">b3</div>
+    <div class="test1 ydnd">b4</div>
+  </div>
 
-<div class="drop-area"><p></p></div>	
-<!-- <div class="drop-area1"></div>	
-<div class="drop-area2"></div>	 -->
+  <div class="col-3">
+    <div class="test1 ydnd">c1</div>
+    <div class="test1 ydnd">c2</div>
+    <div class="test1 ydnd">c3</div>
+  </div>
+</div>
 
-<script src="../jquery.js"></script>
+<!-- <script src="../jquery.js"></script> -->
 <!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
 <script src="drag.js"></script>
 
