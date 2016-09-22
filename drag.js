@@ -145,6 +145,11 @@ document.addEventListener('mouseup',mouseup,false);
 
 var ydnd=document.getElementsByClassName('ydnd');
 for(var i=0,l=ydnd.length;i<l;i++){
+	ydnd[i].style.position='relative';
+	ydnd[i].style.cursor='move';
+	ydnd[i].style.width='100%';
+	ydnd[i].style.backgroundColor='#f60';
+
 	ydnd[i].addEventListener('mousedown',mousedown,false);
 };
 
