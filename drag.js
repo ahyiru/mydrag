@@ -106,7 +106,7 @@ var mousedown=function(e){
 		e.preventDefault();//阻止默认事件
 	  e.stopPropagation();//阻止事件冒泡
 	  //
-	  ele=this;
+	  ele=this.parentNode;
 	  //
 		x=e.pageX-ele.offsetLeft;
 		y=e.pageY-ele.offsetTop;
@@ -136,21 +136,22 @@ var mouseup=function(e){
 		//
 	}
 	//
-	var ydnd=document.getElementsByClassName('ydnd');
-	for(var i=0,l=ydnd.length;i<l;i++){
-		ydnd[i].addEventListener('mousedown',mousedown,false);
+	var ydrag=document.getElementsByClassName('ydrag');
+	for(var i=0,l=ydrag.length;i<l;i++){
+		ydrag[i].addEventListener('mousedown',mousedown,false);
 	};
 };
 document.addEventListener('mouseup',mouseup,false);
 
 var ydnd=document.getElementsByClassName('ydnd');
-for(var i=0,l=ydnd.length;i<l;i++){
+var ydrag=document.getElementsByClassName('ydrag');
+for(var i=0,l=ydrag.length;i<l;i++){
 	ydnd[i].style.position='relative';
-	ydnd[i].style.cursor='move';
 	ydnd[i].style.width='100%';
-	ydnd[i].style.backgroundColor='#f60';
 
-	ydnd[i].addEventListener('mousedown',mousedown,false);
+	ydrag[i].style.cursor='move';
+
+	ydrag[i].addEventListener('mousedown',mousedown,false);
 };
 
 
