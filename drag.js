@@ -1,10 +1,10 @@
 /*ydnd*/
 
-// start clasName
-const hasClass=(target,cname)=>{
+// start className
+var hasClass=(target,cname)=>{
   return target.className.match(new RegExp('(\\s|^)'+cname+'(\\s|$)')); 
 };
-const addClass=(target,cname)=>{
+var addClass=(target,cname)=>{
   var nameArr=cname.split(' ');
   nameArr.map((v,k)=>{
     if(!!v&&!hasClass(target,v)){
@@ -12,7 +12,7 @@ const addClass=(target,cname)=>{
     }
   });
 };
-const removeClass=(target,cname)=>{
+var removeClass=(target,cname)=>{
   var nameArr=cname.split(' ');
   nameArr.map((v,k)=>{
     if(!!v&&hasClass(target,v)){
@@ -21,7 +21,7 @@ const removeClass=(target,cname)=>{
     }
   });
 };
-// end clasName
+// end className
 
 // insertAfter
 var insertAfter=function(newEle,oldEle){
@@ -47,51 +47,58 @@ var move=function(ev){
 	var ev=ev||window.event;
 	// var ele=ev.target||ev.srcElement;
 	addClass(ele,'ydragging');
-	//
-	ele.style.width=ele.offsetWidth+'px';
-  ele.style.height=ele.offsetHeight+'px';
-	ele.style.position='absolute';
-	ele.style.zIndex='99999';
-	//
-	var _x=ev.pageX-x,
-			_y=ev.pageY-y;
-	var w=document.body.clientWidth-ele.offsetWidth,
-      h=document.body.clientHeight-ele.offsetHeight;
-  _x=_x<0?0:_x>w?w:_x;
-  _y=_y<0?0:_y>h?h:_y;
-  ele.style.left=_x+'px';
-	ele.style.top=_y+'px';
+  //
+  ele.parentNode.style.width=ele.offsetWidth+'px';
+	ele.parentNode.style.height=ele.offsetHeight+'px';
 	// remove oldarea
 	var oldarea=document.getElementsByClassName('droparea')[0];
 	oldarea&&oldarea.parentNode.removeChild(oldarea);
 	// create droparea
 	var droparea=createDroparea(ele);
 	insertAfter(droparea,ele);
+	//
+	ele.parentNode.style.width='auto';
+	ele.parentNode.style.height='auto';
+  //
+  ele.style.width=ele.offsetWidth+'px';
+  ele.style.height=ele.offsetHeight+'px';
+	ele.style.position='absolute';
+	ele.style.zIndex='99999';
+	//
+	var _x=ev.pageX-x,
+			_y=ev.pageY-y;
+	/*var w=document.body.clientWidth-ele.offsetWidth,
+      h=document.body.clientHeight-ele.offsetHeight;
+  _x=_x<0?0:_x>w?w:_x;
+  _y=_y<0?0:_y>h?h:_y;*/
+  ele.style.left=_x+'px';
+	ele.style.top=_y+'px';
+	
 	// dragarea
 	var drag_r=_x+ele.offsetWidth;
 	var drag_b=_y+ele.offsetHeight;
 	var drag_center=_x+ele.offsetWidth/2;
 	var drag_middle=_y+ele.offsetHeight/2;
-	for(var i=0,l=ydnd.length;i<l;i++){
+	for(var i=0,l=ydrop.length;i<l;i++){
 		//
-		if(hasClass(ydnd[i],'ydragging')){continue;}
-		var drop_l=ydnd[i].offsetLeft;
-		var drop_t=ydnd[i].offsetTop;
-		var drop_r=ydnd[i].offsetLeft+ydnd[i].offsetWidth;
-		var drop_b=ydnd[i].offsetTop+ydnd[i].offsetHeight;
-		var drop_center=ydnd[i].offsetLeft+ydnd[i].offsetWidth/2;
-		var drop_middle=ydnd[i].offsetTop+ydnd[i].offsetHeight/2;
+		if(hasClass(ydrop[i],'ydragging')){continue;}
+		var drop_l=ydrop[i].offsetLeft;
+		var drop_t=ydrop[i].offsetTop;
+		var drop_r=ydrop[i].offsetLeft+ydrop[i].offsetWidth;
+		var drop_b=ydrop[i].offsetTop+ydrop[i].offsetHeight;
+		var drop_center=ydrop[i].offsetLeft+ydrop[i].offsetWidth/2;
+		var drop_middle=ydrop[i].offsetTop+ydrop[i].offsetHeight/2;
 		//
-		if((drag_center>drop_l&&drag_center<drop_r&&drag_middle>drop_t&&drag_middle<drop_b)||(drop_center>_x&&drop_center<drag_r&&drop_middle>_y&&drop_middle<drag_b)){
+		if((drag_center>drop_l&&drag_center<drop_r&&drag_middle>drop_t&&drag_middle<drop_b)||(drop_center>_x&&drop_center<drag_r&&drop_middle>_y&&drop_middle<drag_b)){console.log('1');
 			// remove oldarea
 			var oldarea=document.getElementsByClassName('droparea')[0];
-			oldarea.parentNode.removeChild(oldarea);
+			oldarea&&oldarea.parentNode.removeChild(oldarea);
 			// create droparea
 			if(drag_middle>drop_middle){
-				insertAfter(droparea,ydnd[i]);
+				insertAfter(droparea,ydrop[i]);
 			}
 			else{
-				ydnd[i].parentNode.insertBefore(droparea,ydnd[i]);
+				ydrop[i].parentNode.insertBefore(droparea,ydrop[i]);
 			}
 			//
 			break;
@@ -144,10 +151,14 @@ var mouseup=function(e){
 document.addEventListener('mouseup',mouseup,false);
 
 var ydnd=document.getElementsByClassName('ydnd');
+var ydrop=document.getElementsByClassName('ydrop');
 var ydrag=document.getElementsByClassName('ydrag');
 for(var i=0,l=ydrag.length;i<l;i++){
-	ydnd[i].style.position='relative';
-	ydnd[i].style.width='100%';
+	// ydnd[i].style.position='relative';
+	
+	ydrop[i].style.position='relative';
+	ydrop[i].style.width='100%';
+	ydrop[i].style.transition='none';
 
 	ydrag[i].style.cursor='move';
 
