@@ -42,6 +42,11 @@
     background-color: #f60;
   }
 </style>
+<script>
+  var test=function(){
+    console.log('22');
+  }
+</script>
 </head>
 <body>
 
@@ -67,7 +72,7 @@
   <div class="col-3">
     <div class="ydnd">
       <div class="test1 ydrop">
-        <div class="ydrag">b1</div>  
+      <div class="ydrag" onclick="test();"><span>b1</span></div>  
       </div>
     </div>
     <div class="ydnd">

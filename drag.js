@@ -89,7 +89,7 @@ var move=function(ev){
 		var drop_center=ydrop[i].offsetLeft+ydrop[i].offsetWidth/2;
 		var drop_middle=ydrop[i].offsetTop+ydrop[i].offsetHeight/2;
 		//
-		if((drag_center>drop_l&&drag_center<drop_r&&drag_middle>drop_t&&drag_middle<drop_b)||(drop_center>_x&&drop_center<drag_r&&drop_middle>_y&&drop_middle<drag_b)){console.log('1');
+		if((drag_center>drop_l&&drag_center<drop_r&&drag_middle>drop_t&&drag_middle<drop_b)||(drop_center>_x&&drop_center<drag_r&&drop_middle>_y&&drop_middle<drag_b)){
 			// remove oldarea
 			var oldarea=document.getElementsByClassName('droparea')[0];
 			oldarea&&oldarea.parentNode.removeChild(oldarea);
@@ -121,7 +121,7 @@ var mousedown=function(e){
 	}
 };
 var mouseup=function(e){
-	// var ele=e.target||e.srcElement;
+	// var test=e.target||e.srcElement;
 	document.removeEventListener('mousemove',move,false);
 	document.removeEventListener('mousedown',mousedown,false);
 	//
