@@ -1,5 +1,9 @@
 /*ydnd*/
 
+`blur focus focusin focusout resize scroll click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup contextmenu`.split(' ').map(function(v,k){
+	// var str=str.replace(/\r\n/ig,','); 
+});
+
 // start className
 var hasClass=(target,cname)=>{
   return target.className.match(new RegExp('(\\s|^)'+cname+'(\\s|$)')); 
@@ -46,6 +50,7 @@ var x,y,ele;
 var move=function(ev){
 	var ev=ev||window.event;
 	// var ele=ev.target||ev.srcElement;
+
 	addClass(ele,'ydragging');
   //
   ele.parentNode.style.width=ele.offsetWidth+'px';
@@ -109,31 +114,40 @@ var move=function(ev){
 	};
 };
 var mousedown=function(e){
+	var e=e||window.event;
+	ele=e.target||e.srcElement;
 	if(e.button==0){//阻止右键点击 or e.which==1;
-		e.preventDefault();//阻止默认事件
-	  e.stopPropagation();//阻止事件冒泡
-	  //
-	  ele=this.parentNode;
-	  //
-		x=e.pageX-ele.offsetLeft;
-		y=e.pageY-ele.offsetTop;
-		document.addEventListener('mousemove',move,false);
+		if(hasClass(ele,'ydrag')){
+			// e.preventDefault();//阻止默认事件
+		  // e.stopPropagation();//阻止事件冒泡
+		  //
+		  ele=ele.parentNode;
+		  // 数据缓存
+		  // var dropData;
+		  //
+			x=e.pageX-ele.offsetLeft;
+			y=e.pageY-ele.offsetTop;
+			document.addEventListener('mousemove',move,false);
+		}
 	}
 };
 var mouseup=function(e){
-	// var test=e.target||e.srcElement;
+	/*var e=e||window.event;
+	var ele=e.target||e.srcElement;*/
+	// document.removeEventListener('mousedown',mousedown,false);
 	document.removeEventListener('mousemove',move,false);
-	document.removeEventListener('mousedown',mousedown,false);
-	//
-	removeClass(ele,'ydragging');
-	//
-	ele.style.position='relative';
-	ele.style.left=0;
-	ele.style.top=0;
-	ele.style.zIndex='auto';
+	// console.log(ele.attributes);
 	//
 	var droparea=document.getElementsByClassName('droparea')[0];
 	if(droparea){
+		//
+		removeClass(ele,'ydragging');
+		//
+		ele.style.position='relative';
+		ele.style.left=0;
+		ele.style.top=0;
+		ele.style.zIndex='auto';
+
 		var newNode=ele.cloneNode(true);
 		droparea.parentNode.replaceChild(newNode,droparea);
 		newNode.style.width='100%';
@@ -143,26 +157,22 @@ var mouseup=function(e){
 		//
 	}
 	//
-	var ydrag=document.getElementsByClassName('ydrag');
-	for(var i=0,l=ydrag.length;i<l;i++){
-		ydrag[i].addEventListener('mousedown',mousedown,false);
-	};
 };
+
 document.addEventListener('mouseup',mouseup,false);
+
+document.addEventListener('mousedown',mousedown,false);
 
 var ydnd=document.getElementsByClassName('ydnd');
 var ydrop=document.getElementsByClassName('ydrop');
 var ydrag=document.getElementsByClassName('ydrag');
 for(var i=0,l=ydrag.length;i<l;i++){
 	// ydnd[i].style.position='relative';
-	
 	ydrop[i].style.position='relative';
 	ydrop[i].style.width='100%';
 	ydrop[i].style.transition='none';
 
 	ydrag[i].style.cursor='move';
-
-	ydrag[i].addEventListener('mousedown',mousedown,false);
 };
 
 
